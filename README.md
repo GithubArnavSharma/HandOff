@@ -10,8 +10,4 @@ pip install -r requirements.txt
 
 py -3.6 app.py
 
-After downloading the repository, navigate to it on your command prompt. Type the respective command to your program that will run app.py. As an example, your command may look something like:
-
-py -3.6 app.py
-
 3. Finally, copy and paste the link given to the localhost website onto your browser. 
