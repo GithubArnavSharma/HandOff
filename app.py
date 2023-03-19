@@ -29,9 +29,6 @@ isInFace = None
 
 def gen_frames():  # generate frame by frame from camera
     global timesTouched  
-    global prevIn   
-    global isInFace   
-    global canAdd
 
 
     while True:
