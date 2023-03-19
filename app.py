@@ -19,10 +19,7 @@ mixer.music.load('ding.mp3')
 
 def point_in_face(pointx, pointy, rectx, recty, rectw, recth):
     if (pointx > rectx and pointx < rectx+rectw and pointy > recty and pointy < recty+recth): return True
-    
-def hourly_amount(minutes, nums):
-    return nums * (60 / minutes)
-
+   
 
 timesTouched = 0
 isInFace = None
