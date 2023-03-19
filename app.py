@@ -34,6 +34,9 @@ startTime = datetime.datetime.now()
 
 def gen_frames():  # generate frame by frame from camera
     global timesTouched  
+    global prevIn   
+    global isInFace   
+    global canAdd
     timesTouched = 0 
 
 
@@ -67,6 +70,8 @@ def gen_frames():  # generate frame by frame from camera
 
                 fingerList = hand["lmList"]
 
+                stored = isInFace
+
                 isInFace = False
         
                 for x, y, _ in fingerList:
@@ -78,7 +83,7 @@ def gen_frames():  # generate frame by frame from camera
                         timesTouched += 1
                         isInFace = False
 
-                 if isInFace:
+                if isInFace:
                     
                     if canAdd:
                         timesTouched += 1
@@ -90,18 +95,18 @@ def gen_frames():  # generate frame by frame from camera
 
                     canAdd = False
                     
-                  elif not isInFace and stored:
+                elif not isInFace and stored:
                     
                     canAdd = True
                
 
-                 amount_minutes = (datetime.datetime.now() - startTime).total_seconds() / 60
+                amount_minutes = (datetime.datetime.now() - startTime).total_seconds() / 60
 
 
-                 ret, buffer = cv2.imencode('.jpg', img)
-                 frame = buffer.tobytes()
+            ret, buffer = cv2.imencode('.jpg', img)
+            frame = buffer.tobytes()
 
-                 yield (b'--frame\r\n'
+            yield (b'--frame\r\n'
                            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
 
