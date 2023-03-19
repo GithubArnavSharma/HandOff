@@ -37,7 +37,6 @@ def gen_frames():  # generate frame by frame from camera
     global prevIn   
     global isInFace   
     global canAdd
-    timesTouched = 0 
 
 
     while True:
@@ -76,18 +75,13 @@ def gen_frames():  # generate frame by frame from camera
         
                 for x, y, _ in fingerList:
                     cv2.circle(img, (x, y), 15, (139, 0, 0), cv2.FILLED)
-                    is_in = point_in_face(x, y, rectx, recty, rectw, recth)
-                    if rectx != -1 and is_in:
+                    if rectx != -1 and point_in_face(x, y, rectx, recty, rectw, recth):
                         isInFace = True
-                    elif isInFace and not is_in: 
-                        timesTouched += 1
-                        isInFace = False
 
                 if isInFace:
                     
                     if canAdd:
                         timesTouched += 1
-                        print(timesTouched)
 
                     mixer.music.play()
                     time.sleep(0.25)
