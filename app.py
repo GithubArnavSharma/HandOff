@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, Response
 from pygame import mixer
 import cv2
 from cvzone.HandTrackingModule import HandDetector
+import datetime
 import time
 
 app = Flask(__name__)
@@ -18,6 +19,17 @@ mixer.music.load('ding.mp3')
 
 def point_in_face(pointx, pointy, rectx, recty, rectw, recth):
     if (pointx > rectx and pointx < rectx+rectw and pointy > recty and pointy < recty+recth): return True
+    
+def hourly_amount(minutes, nums):
+    return nums * (60 / minutes)
+
+
+timesTouched = 0
+prevIn = None
+isInFace = None
+canAdd = True
+
+startTime = datetime.datetime.now()
     
 
 def gen_frames():  # generate frame by frame from camera
@@ -66,17 +78,31 @@ def gen_frames():  # generate frame by frame from camera
                         timesTouched += 1
                         isInFace = False
 
-                if isInFace:
+                 if isInFace:
+                    
+                    if canAdd:
+                        timesTouched += 1
+                        print(timesTouched)
+
                     mixer.music.play()
                     time.sleep(0.25)
                     mixer.music.stop()
-                    
 
-            ret, buffer = cv2.imencode('.jpg', img)
-            frame = buffer.tobytes()
-         
-            yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+                    canAdd = False
+                    
+                  elif not isInFace and stored:
+                    
+                    canAdd = True
+               
+
+                 amount_minutes = (datetime.datetime.now() - startTime).total_seconds() / 60
+
+
+                 ret, buffer = cv2.imencode('.jpg', img)
+                 frame = buffer.tobytes()
+
+                 yield (b'--frame\r\n'
+                           b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
 
 @app.route('/video_feed')
@@ -89,11 +115,6 @@ def video_feed():
 def index():
     """Video streaming home page."""
     return render_template('index.html')
-
-@app.route('/times_touched', methods=['POST'])
-def times_touched():
-    return jsonify({'result': "0"})
-
 
 if __name__ == '__main__':
     app.run(debug=True)
