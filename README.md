@@ -2,7 +2,7 @@
 
 In order to use this repository, first start off by downloading it. From there, the steps you should take are as follows:
 
-1. Install everything from requirements.txt. In order to do this, run the following command:
+1. Install everything from requirements.txt. In order to do this, run the following command(or some minor variation of it):
 
 pip install -r requirements.txt
 
