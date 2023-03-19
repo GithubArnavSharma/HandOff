@@ -25,12 +25,7 @@ def hourly_amount(minutes, nums):
 
 
 timesTouched = 0
-prevIn = None
 isInFace = None
-canAdd = True
-
-startTime = datetime.datetime.now()
-    
 
 def gen_frames():  # generate frame by frame from camera
     global timesTouched  
@@ -68,9 +63,7 @@ def gen_frames():  # generate frame by frame from camera
                     hand = hands[1]
 
                 fingerList = hand["lmList"]
-
-                stored = isInFace
-
+                
                 isInFace = False
         
                 for x, y, _ in fingerList:
@@ -79,24 +72,11 @@ def gen_frames():  # generate frame by frame from camera
                         isInFace = True
 
                 if isInFace:
-                    
-                    if canAdd:
-                        timesTouched += 1
-
+                  
                     mixer.music.play()
                     time.sleep(0.25)
                     mixer.music.stop()
-
-                    canAdd = False
-                    
-                elif not isInFace and stored:
-                    
-                    canAdd = True
-               
-
-                amount_minutes = (datetime.datetime.now() - startTime).total_seconds() / 60
-
-
+              
             ret, buffer = cv2.imencode('.jpg', img)
             frame = buffer.tobytes()
 
