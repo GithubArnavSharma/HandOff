@@ -11,3 +11,7 @@ pip install -r requirements.txt
 py -3.6 app.py
 
 3. Finally, copy and paste the link given to the localhost website onto your browser. 
+
+Here is the demo from the resulting website:
+
+https://drive.google.com/file/d/1_fT9MMigbid8SE96lCdx9js1CWH2fA04/view?usp=share_link
