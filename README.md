@@ -1,6 +1,6 @@
 # HandOff
 
-After downloading the repository, type the following command into your terminal to run the program:
+After downloading the repository, type the respective command to your program that will run app.py. As an example, your command may look something like:
 
 py -3.6 app.py
 
